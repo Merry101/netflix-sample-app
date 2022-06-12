@@ -5,8 +5,7 @@ import "./Banner.css";
 function Banner() {
 const [movie, setMovie] = useState()
   useEffect(()=>{
-axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`).then((response)=>{
-  debugger
+axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`).then((response)=>{  
   const rand=response.data.results[Math.floor(Math.random()*response.data.results.length)];
   console.log(rand)
   setMovie(rand)

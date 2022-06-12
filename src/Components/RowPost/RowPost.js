@@ -9,7 +9,7 @@ function RowPost(props) {
   const [urlId, setUrlId] = useState([])  
   useEffect(()=>{
     axios.get(props.url).then((response)=>{
-      console.log(response.data);
+      //console.log(response.data);
       setMovies(response.data.results)
     }).catch(err=>{
       alert('Network Error');
@@ -19,14 +19,13 @@ function RowPost(props) {
   const opts = {
     height: '390',
     width: '100%',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
+    playerVars: {      
+      autoplay: 1      
     },    
   };
 
-  const handleMovieTrailer = (id)=>{
-axios.get(`/movie/${297762}/videos?api_key=${API_KEY}&language=en-US`).then(response => {
+  const handleMovieTrailer = (id)=>{    
+axios.get(`/movie/${id}/videos?api_key=${API_KEY}&language=en-US`).then(response => {
   if(response.data.results.length !== 0){
     setUrlId(response.data.results[0])
   }
@@ -37,8 +36,8 @@ axios.get(`/movie/${297762}/videos?api_key=${API_KEY}&language=en-US`).then(resp
     <div className='row'>
         <h2>{props.title}</h2>
         <div className='posters'>
-          {movies.map((obj)=>
-            <img onClick={handleMovieTrailer(obj.id)} key={obj.id} className={props.isSmall ? 'smallPoster' : 'poster' }src={`${imageURL + obj.backdrop_path}`}></img>
+          {movies.map((obj)=>          
+            <img onClick={ () => handleMovieTrailer(obj.id)} key={obj.id} className={props.isSmall ? 'smallPoster' : 'poster' }src={`${imageURL + obj.backdrop_path}`}></img>
           )}                       
         </div>
        {urlId && <Youtube opts={opts} videoId={urlId.key}></Youtube>} 
